@@ -3,6 +3,7 @@ package com.rockCode.project2.MVC.Architecture.controllers;
 import com.rockCode.project2.MVC.Architecture.dto.EmployeeDTO;
 import com.rockCode.project2.MVC.Architecture.entities.EmployeeEntity;
 import com.rockCode.project2.MVC.Architecture.repositories.EmployeeRepository;
+import com.rockCode.project2.MVC.Architecture.services.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,19 +16,20 @@ public class EmployeeController {
 //    public String getMySuperSecretMessage(){
 //        return "Secret message: dhdhbfdj#4nk%%dns";
 
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService) {
+        this.employeeService = employeeService;
     }
 
-//    @GetMapping("/{employeeId}")
+
+    //    @GetMapping("/{employeeId}")
 //    public EmployeeDTO getEmployeeByID(@PathVariable Long employeeId){
 //        return new EmployeeDTO(employeeId, "Sree Ram", "sreeramchray@gmail.com", 24, LocalDate.of(2024,1,1),true);
 //    }
     @GetMapping("/{employeeId}")
-    public EmployeeEntity getEmployeeByID(@PathVariable Long employeeId){
-        return employeeRepository.findById(employeeId).orElse(null);
+    public EmployeeDTO getEmployeeByID(@PathVariable Long employeeId){
+        return employeeService.getEmployeeByID(employeeId);
     }
 
 
@@ -37,8 +39,8 @@ public class EmployeeController {
 //    }
 
     @GetMapping
-    public List<EmployeeEntity> getAllEmployee(@RequestParam(required = false) Integer age){
-        return employeeRepository.findAll();
+    public List<EmployeeDTO> getAllEmployee(@RequestParam(required = false) Integer age){
+        return employeeService.getAllEmployee();
     }
 
 //    @PostMapping
@@ -47,8 +49,8 @@ public class EmployeeController {
 //    }
 
     @PostMapping
-    public EmployeeEntity createEmployee(@RequestBody EmployeeEntity input){
-        return employeeRepository.save(input);
+    public EmployeeDTO createEmployee(@RequestBody EmployeeDTO input){
+        return employeeService.createEmployee(input);
     }
 
 
