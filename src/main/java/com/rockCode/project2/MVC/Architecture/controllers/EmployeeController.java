@@ -50,4 +50,6 @@ public class EmployeeController {
     public EmployeeEntity createEmployee(@RequestBody EmployeeEntity input){
         return employeeRepository.save(input);
     }
+
+
 }
